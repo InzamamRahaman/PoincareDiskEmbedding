@@ -1,4 +1,11 @@
 import torch
+import random
+
+
+
+
+
+
 
 def proj(x, epsilon=0.00001):
     """
@@ -18,6 +25,7 @@ def proj(x, epsilon=0.00001):
     """
     size = x.size()
     norms = torch.norm(x, p=2, dim=1)
+    #print(norms)
     norms = norms.repeat(1, size[1])
     res = x / norms
     res -= epsilon
@@ -61,7 +69,7 @@ def hyperbolic_distance(x, y):
     y_size = y.size()
 
     y1 = y.repeat(x_size[0], 1, 1)
-    x1 = x.view(2, 1, x_size[1])
+    x1 = x.view(x_size[0], 1, x_size[1])
     x1 = x.repeat(1, y_size[0], 1)
     z = (x1 - y1)
     norms = torch.norm(z, p=2, dim=2)
